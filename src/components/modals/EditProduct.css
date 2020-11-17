@@ -1,0 +1,24 @@
+.backgound-modal {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(200, 200, 200, 0.5);
+    top:0;
+    left: 0;
+    z-index: 200;
+}
+
+.custom-modal {
+    background-color: white;
+    width: 50vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 25vw;
+    z-index: 300;
+}
+
+.img-product {
+    height: 100px;
+    width: auto;
+}
