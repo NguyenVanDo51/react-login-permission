@@ -12,55 +12,50 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Users from './pages/user/Users'
+import Cart from './pages/product/Cart'
 import "./App.css"
-
-function updateUser(id1, email1, role1) {
-  return {
-    type: "UPDATE USER",
-    user: {
-      id: id1,
-      email: email1,
-      role: role1
-    },
-  }
-}
 
 function App(props) {
 
-  const { user } = props
-
-  console.log("user", user)
+  const { user, updateUser } = props
 
   return (
     <Router>
-      <Navbar user={user} setUser={props.dispatch} updateUser={updateUser} />
+      <Navbar user={user} updateUser={updateUser} />
       <div className="container">
         <Switch>
-          <Route path="/admin/products">
+          <Route exact path="/admin/products">
             {
               user.role === "Admin" || user.role === "CTV" ? <ProductAdmin /> : <ProductGuest />
             }
           </Route>
-          <Route path="/admin/users">
+          <Route exact path="/admin/users">
             {
               user.role === "Admin" || user.role === "CTV" ? <Users /> : <ProductGuest />
             }
           </Route>
 
-          <Route path="/register">
+          <Route exact path="/register">
             {user.id ? <Redirect to="/" /> : <Register />}
           </Route>
-          <Route path="/login">
-            {user.id ? <Redirect to="/" /> : <Login user={user} setUser={props.dispatch} updateUser={updateUser} />}
+
+          <Route exact path="/cart">
+            {user.id ? <Cart /> : <Redirect to="/" />}
           </Route>
 
-          <Route path="/products" > <ProductGuest /></Route>
+          <Route exact path="/login">
+            {user.id ? <Redirect to="/" /> : <Login user={user} updateUser={updateUser} />}
+          </Route>
 
-          <Route path="/">
+          <Route exact path="/products" > <ProductGuest /></Route>
+
+          <Route exact path="/">
             {
               user.role === "Admin" || user.role === "CTV" ? <Dashboard /> : <ProductAdmin />
             }
           </Route>
+
+
 
         </Switch>
       </div>

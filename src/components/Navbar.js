@@ -1,14 +1,15 @@
 import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { Dropdown } from 'react-bootstrap'
 
 const NavBar = (props) => {
 
-    const { user, setUser, updateUser } = props
+    const { user, updateUser } = props
 
     const logout = () => {
         axios.get('logout/?controller=User&action=logout')
-        setUser(updateUser('', '', 'Member'))
+        updateUser('', '', 'Member')
     }
 
     return (
@@ -16,10 +17,22 @@ const NavBar = (props) => {
             <Link className="nav-link" to="/">Home</Link>
             <div className="mr-2">
                 {user.id ?
-                    <Fragment>
-                        <span>Hello, {user.email}</span>
-                        <button className="btn btn-primary btn-sm ml-3" onClick={logout}>Logout</button>
-                    </Fragment>
+                    <Dropdown id="dropdown-basic" >
+                        <Dropdown.Toggle style={{
+                            background: 'none',
+                            border: 'none',
+                            color: 'black',
+                        }}>
+                            <i className="far fa-user-circle"></i>
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item>{user.email}</Dropdown.Item>
+                            <Link to="cart" className="dropdown-item">Cart</Link>
+                            <Dropdown.Item onClick={logout}>
+                                Logout
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
                     :
                     <Fragment>
                         <Link className="btn btn-primary btn-sm mx-3" to="/login">Login</Link>

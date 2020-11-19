@@ -5,7 +5,7 @@ import "./css/login.css"
 
 const Login = (props) => {
 
-    const { user, setUser, updateUser } = props
+    const { updateUser } = props
 
     const [emailData, setEmail] = useState('');
     const [passwordData, setPassword] = useState('');
@@ -22,7 +22,7 @@ const Login = (props) => {
     const handleLogin = (event) => {
         axios.get('/login/?controller=User&action=login&email=' + emailData + '&password=' + passwordData)
             .then(response => {
-                setUser(updateUser(response.data.user.user_id, response.data.user.email, response.data.user.role))
+                updateUser(response.data.user.user_id, response.data.user.email, response.data.user.role)
                 history.push('/')
             }).catch(error => {
                 console.log("Error when login:")
